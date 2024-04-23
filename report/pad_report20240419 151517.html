@@ -1,0 +1,564 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title>DIMP 测试报告</title>
+    <meta name="generator" content="HTMLTestRunner 0.9.1"/>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    
+    <link href="http://cdn.bootcss.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.bootcss.com/echarts/3.8.5/echarts.common.min.js"></script>
+    <!-- <script type="text/javascript" src="js/echarts.common.min.js"></script> -->
+    
+    
+<style type="text/css" media="screen">
+    body        { font-family: Microsoft YaHei,Consolas,arial,sans-serif; font-size: 80%; }
+    table       { font-size: 100%; }
+    pre         { white-space: pre-wrap;word-wrap: break-word; }
+
+    /* -- heading ---------------------------------------------------------------------- */
+    h1 {
+        font-size: 16pt;
+        color: gray;
+    }
+    .heading {
+        margin-top: 0ex;
+        margin-bottom: 1ex;
+    }
+
+    .heading .attribute {
+        margin-top: 1ex;
+        margin-bottom: 0;
+    }
+
+    .heading .description {
+        margin-top: 2ex;
+        margin-bottom: 3ex;
+    }
+
+    /* -- css div popup ------------------------------------------------------------------------ */
+    a.popup_link {
+    }
+
+    a.popup_link:hover {
+        color: red;
+    }
+
+    .popup_window {
+        display: none;
+        position: relative;
+        left: 0px;
+        top: 0px;
+        /*border: solid #627173 1px; */
+        padding: 10px;
+        /*background-color: #E6E6D6; */
+        font-family: "Lucida Console", "Courier New", Courier, monospace;
+        text-align: left;
+        font-size: 8pt;
+        /* width: 500px;*/
+    }
+
+    }
+    /* -- report ------------------------------------------------------------------------ */
+    #show_detail_line {
+        margin-top: 3ex;
+        margin-bottom: 1ex;
+    }
+    #result_table {
+        width: 99%;
+    }
+    #header_row {
+        font-weight: bold;
+        color: #303641;
+        background-color: #ebebeb;
+    }
+    #total_row  { font-weight: bold; }
+    .passClass  { background-color: #bdedbc; }
+    .failClass  { background-color: #ffefa4; }
+    .errorClass { background-color: #ffc9c9; }
+    .passCase   { color: #6c6; }
+    .failCase   { color: #FF6600; font-weight: bold; }
+    .errorCase  { color: #c00; font-weight: bold; }
+    .hiddenRow  { display: none; }
+    .testcase   { margin-left: 2em; }
+
+
+    /* -- ending ---------------------------------------------------------------------- */
+    #ending {
+    }
+
+    #div_base {
+                position:absolute;
+                top:0%;
+                left:5%;
+                right:5%;
+                width: auto;
+                height: auto;
+                margin: -15px 0 0 0;
+    }
+</style>
+
+    
+</head>
+<body>
+    <script language="javascript" type="text/javascript"><!--
+    output_list = Array();
+
+    /* level - 0:Summary; 1:Failed; 2:All */
+    function showCase(level) {
+        trs = document.getElementsByTagName("tr");
+        for (var i = 0; i < trs.length; i++) {
+            tr = trs[i];
+            id = tr.id;
+            if (id.substr(0,2) == 'ft') {
+                if (level < 1) {
+                    tr.className = 'hiddenRow';
+                }
+                else {
+                    tr.className = '';
+                }
+            }
+            if (id.substr(0,2) == 'pt') {
+                if (level > 1) {
+                    tr.className = '';
+                }
+                else {
+                    tr.className = 'hiddenRow';
+                }
+            }
+        }
+    }
+
+
+    function showClassDetail(cid, count) {
+        var id_list = Array(count);
+        var toHide = 1;
+        for (var i = 0; i < count; i++) {
+            tid0 = 't' + cid.substr(1) + '.' + (i+1);
+            tid = 'f' + tid0;
+            tr = document.getElementById(tid);
+            if (!tr) {
+                tid = 'p' + tid0;
+                tr = document.getElementById(tid);
+            }
+            id_list[i] = tid;
+            if (tr.className) {
+                toHide = 0;
+            }
+        }
+        for (var i = 0; i < count; i++) {
+            tid = id_list[i];
+            if (toHide) {
+                document.getElementById('div_'+tid).style.display = 'none'
+                document.getElementById(tid).className = 'hiddenRow';
+            }
+            else {
+                document.getElementById(tid).className = '';
+            }
+        }
+    }
+
+
+    function showTestDetail(div_id){
+        var details_div = document.getElementById(div_id)
+        var displayState = details_div.style.display
+        // alert(displayState)
+        if (displayState != 'block' ) {
+            displayState = 'block'
+            details_div.style.display = 'block'
+        }
+        else {
+            details_div.style.display = 'none'
+        }
+    }
+
+
+    function html_escape(s) {
+        s = s.replace(/&/g,'&amp;');
+        s = s.replace(/</g,'&lt;');
+        s = s.replace(/>/g,'&gt;');
+        return s;
+    }
+
+    /* obsoleted by detail in <div>
+    function showOutput(id, name) {
+        var w = window.open("", //url
+                        name,
+                        "resizable,scrollbars,status,width=800,height=450");
+        d = w.document;
+        d.write("<pre>");
+        d.write(html_escape(output_list[id]));
+        d.write("\n");
+        d.write("<a href='javascript:window.close()'>close</a>\n");
+        d.write("</pre>\n");
+        d.close();
+    }
+    */
+    --></script>
+
+    <div id="div_base">
+        
+    <div class='page-header'>
+        <h1>DIMP 测试报告</h1>
+    <p class='attribute'><strong>开始时间:</strong> 2024-04-19 15:15:17</p>
+<p class='attribute'><strong>运行时长:</strong> 0:00:03.518228</p>
+<p class='attribute'><strong>状态:</strong> 通过 12 失败 2</p>
+
+    </div>
+    <div style="float: left;width:50%;"><p class='description'></p></div>
+    <div id="chart" style="width:50%;height:400px;float:left;"></div>
+
+        
+    <div class="btn-group btn-group-sm">
+        <button class="btn btn-default" onclick='javascript:showCase(0)'>总结</button>
+        <button class="btn btn-default" onclick='javascript:showCase(1)'>失败</button>
+        <button class="btn btn-default" onclick='javascript:showCase(2)'>全部</button>
+    </div>
+    <p></p>
+    <table id='result_table' class="table table-bordered">
+        <colgroup>
+            <col align='left' />
+            <col align='right' />
+            <col align='right' />
+            <col align='right' />
+            <col align='right' />
+            <col align='right' />
+        </colgroup>
+        <tr id='header_row'>
+            <td>测试套件/测试用例</td>
+            <td>总数</td>
+            <td>通过</td>
+            <td>失败</td>
+            <td>错误</td>
+            <td>查看</td>
+        </tr>
+        
+    <tr class='failClass'>
+        <td>testcases.test_pad.TestPad</td>
+        <td>14</td>
+        <td>12</td>
+        <td>2</td>
+        <td>0</td>
+        <td><a href="javascript:showClassDetail('c1',14)">详情</a></td>
+    </tr>
+
+<tr id='ft1.1' class='none'>
+    <td class='failCase'><div class='testcase'>test01_login</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.1')" >
+        失败</a>
+
+    <div id='div_ft1.1' class="popup_window">
+        <pre>ft1.1: {'status': 200, 'message': 'success', 'resultData': {'userid': 'hlx', 'username': '', 'email': '', 'orgid': '', 'token': 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJjbGllbnR0eXBlIjoiUEMiLCJjbGllbnRpZCI6ImMwNjhmZjIzMzEzNjRkNmViYjViOTAzZGE1MmQxY2UzIiwiaXNzIjoidWFjIiwicmVhbG1jb2RlIjoiZGFwX2FwcCIsImV4cCI6MTcxMzU5NzMxNywidXNlcmlkIjoiaGx4In0.9rMQC-w22TVbi6TY6GoFfs8m98KHEH1LWE2QvNQQCPk', 'realmCode': '', 'clientId': ''}, 'token': None}
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\DIMP\testcases\test_pad.py", line 17, in test01_login
+    self.assertEqual(2000,res.status_code)
+AssertionError: 2000 != 200
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.2' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test02_getpreferenceinfo</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.2')" >
+        通过</a>
+
+    <div id='div_pt1.2' class="popup_window">
+        <pre>pt1.2: {'data': [{'preference_key': 'max', 'preference_value': '1'}, {'preference_key': 'default_index', 'preference_value': '138640964642435793617'}, {'preference_key': 'default_theme_index', 'preference_value': '2'}], 'message': '成功', 'status': 2000, 'success': True}
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.3' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test03_theme</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.3')" >
+        通过</a>
+
+    <div id='div_pt1.3' class="popup_window">
+        <pre>pt1.3: {'data': {}, 'message': '成功', 'status': 2000, 'success': True}
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.4' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test04_refresh_setting</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.4')" >
+        通过</a>
+
+    <div id='div_pt1.4' class="popup_window">
+        <pre>pt1.4: {'data': {'isRefresh': 'true', 'timeLength': '1', 'isParamsCache': '', 'timeType': 'minute'}, 'message': '成功', 'status': 2000, 'success': True}
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.5' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test05_userchange_connusers</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.5')" >
+        通过</a>
+
+    <div id='div_pt1.5' class="popup_window">
+        <pre>pt1.5: {'data': [{'user_pkid': '3162594727557226953807', 'user_id': 'hlx', 'login_name': 'hlx', 'user_clname': '郝良喜', 'post_clname': '', 'login_session_type': 'SAMEEQUIPMENT'}], 'message': '成功', 'status': 2000, 'success': True}
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.6' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test06_datacvg_ask</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.6')" >
+        通过</a>
+
+    <div id='div_pt1.6' class="popup_window">
+        <pre>pt1.6: {'data': False, 'message': '成功', 'status': 2000, 'success': True}
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.7' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test07_index</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.7')" >
+        通过</a>
+
+    <div id='div_pt1.7' class="popup_window">
+        <pre>pt1.7: {'data': {'position_use_statu': True, 'userInfo': {'login_name': 'hlx', 'mobile': '15845456525', 'user_clname': '郝良喜', 'user_email': 'liangxi.hao@datacvg.com', 'user_id': 'hlx', 'user_org_name': '数聚股份', 'user_orgid': '5616829609559095645095', 'user_pkid': '3162594727557226953807'}, 'leftMenus': [{'res_pkid': '144609084658924038', 'res_id': '144609084658973273', 'res_clname': '我的收藏', 'res_flname': 'Favourites', 'res_parentid': '0', 'res_rootid': '144609084658973273', 'res_showtype': 'FOLDER', 'res_ptype': '', 'res_systype': 'APP_SYS', 'res_server': '', 'res_sort': '0', 'res_url': '/reportapp/#/collections', 'res_cuid': '', 'res_docid': '', 'res_opentype': '', 'res_imgpath': 'readResImg?res_id=144609084658973273#res_parentid=0', 'res_value': '', 'res_selkeyword': 'N', 'res_stime': '', 'res_etime': '', 'res_description': '', 'update_time': '2020-05-12 14:49:02', 'update_user': '10000000', 'status': 'T', 'res_level': 0, 'res_level_sort': 45, 'res_belong_project': '', 'res_mstr_type': '', 'views_num': 0, 'sort': ''}, {'res_pkid': '144609445799257482', 'res_id': '144609445799282765', 'res_clname': '意见反馈', 'res_flname': 'Feedback', 'res_parentid': '0', 'res_rootid': '144609445799282765', 'res_showtype': 'MENU', 'res_ptype': '', 'res_systype': 'APP_SYS', 'res_server': '', 'res_sort': '0', 'res_url': '#/home/main/feedback', 'res_cuid': '', 'res_docid': '', 'res_opentype': '', 'res_imgpath': 'readResImg?res_id=144609445799282765#res_parentid=0', 'res_value': '', 'res_selkeyword': 'N', 'res_stime': '', 'res_etime': '', 'res_description': '', 'update_time': '2019-02-20 11:12:46', 'update_user': '10000000', 'status': 'T', 'res_level': 0, 'res_level_sort': 46, 'res_belong_project': '', 'res_mstr_type': '', 'views_num': 0, 'sort': ''}, {'res_pkid': '144609080392378899', 'res_id': '144609080392343909', 'res_clname': '个人工作台', 'res_flname': 'Navigation', 'res_parentid': '0', 'res_rootid': '144609080392343909', 'res_showtype': 'MENU', 'res_ptype': '', 'res_systype': 'APP_SYS', 'res_server': 'boe_integrate_config', 'res_sort': '0', 'res_url': '/warehouse/#/quicknav', 'res_cuid': '', 'res_docid': '', 'res_opentype': '', 'res_imgpath': 'readResImg?res_id=144609080392343909#res_parentid=0', 'res_value': '', 'res_selkeyword': 'N', 'res_stime': '', 'res_etime': '', 'res_description': '', 'update_time': '2023-06-20 16:16:01', 'update_user': '10000000', 'status': 'T', 'res_level': 0, 'res_level_sort': 2, 'res_belong_project': '', 'res_mstr_type': '', 'views_num': 0, 'sort': '0'}, {'res_pkid': '144525042344296379', 'res_id': '144525042344232951', 'res_clname': '领导视窗', 'res_flname': 'Executive Overview', 'res_parentid': '0', 'res_rootid': '144525042344232951', 'res_showtype': 'FOLDER', 'res_ptype': '', 'res_systype': 'APP_SYS', 'res_server': 'boe_integrate_config', 'res_sort': '0', 'res_url': '/warehouse/#/leadership', 'res_cuid': '', 'res_docid': '', 'res_opentype': '', 'res_imgpath': 'readResImg?res_id=144525042344232951#res_parentid=0', 'res_value': '', 'res_selkeyword': 'N', 'res_stime': '', 'res_etime': '', 'res_description': '', 'update_time': '2023-06-20 16:15:55', 'update_user': '10000000', 'status': 'T', 'res_level': 0, 'res_level_sort': 3, 'res_belong_project': '', 'res_mstr_type': '', 'views_num': 0, 'sort': '1'}, {'res_pkid': '141776322849706849', 'res_id': '141776322849763954', 'res_clname': '主题报表', 'res_flname': 'Themed Reports', 'res_parentid': '0', 'res_rootid': '141776322849763954', 'res_showtype': 'FOLDER', 'res_ptype': '', 'res_systype': 'APP_SYS', 'res_server': 'boe_integrate_config', 'res_sort': '0', 'res_url': '/warehouse/#/reports', 'res_cuid': '', 'res_docid': '', 'res_opentype': '', 'res_imgpath': 'readResImg?res_id=141776322849763954#res_parentid=0', 'res_value': '', 'res_selkeyword': 'N', 'res_stime': '', 'res_etime': '', 'res_description': '', 'update_time': '2023-06-20 16:15:46', 'update_user': '10000000', 'status': 'T', 'res_level': 0, 'res_level_sort': 4, 'res_belong_project': '', 'res_mstr_type': '', 'views_num': 0, 'sort': '2'}, {'res_pkid': '984334190737608058406', 'res_id': '138640964642435793617', 'res_clname': '数字神经', 'res_flname': 'KPI Kanpan', 'res_parentid': '0', 'res_rootid': '138640964642435793617', 'res_showtype': 'SEMFAPP', 'res_ptype': '', 'res_systype': 'APP_SYS', 'res_server': '', 'res_sort': '0', 'res_url': '/pad/#/pad', 'res_cuid': '', 'res_docid': '', 'res_opentype': '', 'res_imgpath': 'readResImg?res_id=138640964642435793617#res_parentid=0', 'res_value': '', 'res_selkeyword': 'N', 'res_stime': '', 'res_etime': '', 'res_description': '', 'update_time': '2020-07-07 14:20:42', 'update_user': '10000000', 'status': 'T', 'res_level': 0, 'res_level_sort': 5, 'res_belong_project': '', 'res_mstr_type': '', 'views_num': 0, 'sort': '3'}, {'res_pkid': '5693509049835487969101', 'res_id': '5693509050454463893691', 'res_clname': '行动方案', 'res_flname': 'PDCA Action Plan', 'res_parentid': '0', 'res_rootid': '5693509050454463893691', 'res_showtype': 'SEMFAPP', 'res_ptype': '', 'res_systype': 'APP_SYS', 'res_server': '', 'res_sort': '0', 'res_url': '/task/#/task', 'res_cuid': '', 'res_docid': '', 'res_opentype': '1', 'res_imgpath': '', 'res_value': '', 'res_selkeyword': 'N', 'res_stime': '', 'res_etime': '', 'res_description': '', 'update_time': '2024-04-17 14:03:26', 'update_user': '10000000', 'status': 'T', 'res_level': 0, 'res_level_sort': 6, 'res_belong_project': '', 'res_mstr_type': '', 'views_num': 0, 'sort': '4'}], 'homeText': '运营数据', 'userAllResources': {'147884730808292828': {'res_id': '147884730808292828', 'res_clname': '报表模板', 'res_flname': '', 'res_parentid': '144609084658973273', 'res_showtype': 'FOLDER', 'res_url': '', 'res_cuid': '', 'res_docid': '', 'res_level': 1, 'res_level_sort': 0}, '3197591969220822509447': {'res_id': '3197591969220822509447', 'res_clname': '各公司航空客运整体情况.xlf', 'res_flname': '', 'res_parentid': '3197589145764380219447', 'res_showtype': 'BO', 'res_url': 'openreport.do', 'res_cuid': 'Fib.Z1ayLQoAnyYAAADHsiYCBmx2AAEx', 'res_docid': '', 'res_level': 2, 'res_level_sort': 0}, '3318455131746510338247': {'res_id': '3318455131746510338247', 'res_clname': '海航航空渠道销售月度总览3.xlf', 'res_flname': '', 'res_parentid': '3197589145764380219447', 'res_showtype': 'BO', 'res_url': 'openreport.do', 'res_cuid': 'AV72Op7M6cBDoEhy60DI2Lw', 'res_docid': '', 'res_level': 2, 'res_level_sort': 2}, '3318451836708360205791': {'res_id': '3318451836708360205791', 'res_clname': '01 产品销售总览-副本_sunny', 'res_flname': '', 'res_parentid': '3197589145764380219447', 'res_showtype': 'BO', 'res_url': 'openreport.do', 'res_cuid': 'AVOsUkvQwX5GgF.OSHjsYa0', 'res_docid': '', 'res_level': 2, 'res_level_sort': 1}, '3318442874894248336428': {'res_id': '3318442874894248336428', 'res_clname': '维护组织机构维表', 'res_flname': '', 'res_parentid': '141776322849763954', 'res_showtype': 'CI', 'res_url': 'openreport.do', 'res_cuid': '155582477', 'res_docid': '', 'res_level': 1, 'res_level_sort': 5}, '3031361011977943994006': {'res_id': '3031361011977943994006', 'res_clname': '20230107test1', 'res_flname': '', 'res_parentid': '3031318042343524329829', 'res_showtype': 'fineBI', 'res_url': 'openreport.do', 'res_cuid': 'f59a5720e73b4604b4df3c1c20761f28', 'res_docid': '', 'res_level': 2, 'res_level_sort': 1}, '144609445799282765': {'res_id': '144609445799282765', 'res_clname': '意见反馈', 'res_flname': 'Feedback', 'res_parentid': '0', 'res_showtype': 'MENU', 'res_url': '#/home/main/feedback', 'res_cuid': '', 'res_docid': '', 'res_level': 0, 'res_level_sort': 46}, '2135707228729967610660': {'res_id': '2135707228729967610660', 'res_clname': '绩效考核', 'res_flname': 'kpi', 'res_parentid': '138640964642435793617', 'res_showtype': 'FOLDER', 'res_url': 'kpi', 'res_cuid': '', 'res_docid': '', 'res_level': 1, 'res_level_sort': 1}, '3318651945408058222027': {'res_id': '3318651945408058222027', 'res_clname': '西南大学', 'res_flname': '', 'res_parentid': '3197589145764380219447', 'res_showtype': 'BO', 'res_url': 'openreport.do', 'res_cuid': 'AUvF7rQNhNhLmcDssiYCY_4', 'res_docid': '', 'res_level': 2, 'res_level_sort': 4}, '144609080392343909': {'res_id': '144609080392343909', 'res_clname': '个人工作台', 'res_flname': 'Navigation', 'res_parentid': '0', 'res_showtype': 'MENU', 'res_url': '/warehouse/#/quicknav', 'res_cuid': '', 'res_docid': '', 'res_level': 0, 'res_level_sort': 2}, '2135697384820768334806': {'res_id': '2135697384820768334806', 'res_clname': '沙盘下发', 'res_flname': 'sandbox', 'res_parentid': '138640964642435793617', 'res_showtype': 'FOLDER', 'res_url': 'sandbox', 'res_cuid': '', 'res_docid': '', 'res_level': 1, 'res_level_sort': 0}, '3195376971413406694149': {'res_id': '3195376971413406694149', 'res_clname': 'test0323-1', 'res_flname': '', 'res_parentid': '144525042344232951', 'res_showtype': 'BO', 'res_url': 'openreport.do', 'res_cuid': 'AS6dVyJsQFRJm6w3Has_NrI', 'res_docid': '', 'res_level': 1, 'res_level_sort': 1}, '3196663318717809719658': {'res_id': '3196663318717809719658', 'res_clname': '测试仪表板1', 'res_flname': '', 'res_parentid': '3031318042343524329829', 'res_showtype': 'fineBI', 'res_url': 'openreport.do', 'res_cuid': 'b689f44d1e8f40da92e6655be5fcff12', 'res_docid': '', 'res_level': 2, 'res_level_sort': 0}, '138640964642435793617': {'res_id': '138640964642435793617', 'res_clname': '数字神经', 'res_flname': 'KPI Kanpan', 'res_parentid': '0', 'res_showtype': 'SEMFAPP', 'res_url': '/pad/#/pad', 'res_cuid': '', 'res_docid': '', 'res_level': 0, 'res_level_sort': 5}, '3318644786980353079356': {'res_id': '3318644786980353079356', 'res_clname': '西南大学参数测试', 'res_flname': '', 'res_parentid': '3197589145764380219447', 'res_showtype': 'BO', 'res_url': 'openreport.do', 'res_cuid': 'Af3yhSEKCflOgejjruvH2Ag', 'res_docid': '', 'res_level': 2, 'res_level_sort': 3}, '144609084658973273': {'res_id': '144609084658973273', 'res_clname': '我的收藏', 'res_flname': 'Favourites', 'res_parentid': '0', 'res_showtype': 'FOLDER', 'res_url': '/reportapp/#/collections', 'res_cuid': '', 'res_docid': '', 'res_level': 0, 'res_level_sort': 45}, '5650500263839745841278': {'res_id': '5650500263839745841278', 'res_clname': '销售额市场分析', 'res_flname': '', 'res_parentid': '5650393726582736454945', 'res_showtype': 'fine', 'res_url': 'openreport', 'res_cuid': 'demo/analytics/marketing/销售额市场分析.frm', 'res_docid': '', 'res_level': 0, 'res_level_sort': 0}, '3291476377036955137157': {'res_id': '3291476377036955137157', 'res_clname': '西南大学1', 'res_flname': '', 'res_parentid': '144525042344232951', 'res_showtype': 'BO', 'res_url': 'openreport.do', 'res_cuid': 'AWu7xihgLiFOvOc7gn6D2CA', 'res_docid': '', 'res_level': 1, 'res_level_sort': 4}, '3197467538604870783083': {'res_id': '3197467538604870783083', 'res_clname': '测试大数据导出(14W)', 'res_flname': '', 'res_parentid': '3031318042343524329829', 'res_showtype': 'BO', 'res_url': 'openreport.do', 'res_cuid': 'AVabZBIfFNRMndvsrXYgo2M', 'res_docid': '', 'res_level': 2, 'res_level_sort': 2}, '3197649844342288560976': {'res_id': '3197649844342288560976', 'res_clname': '淘宝', 'res_flname': '', 'res_parentid': '141776322849763954', 'res_showtype': 'CUSTOMJUMP', 'res_url': 'openreport.do', 'res_cuid': 'https://www.taobao.com/', 'res_docid': '', 'res_level': 1, 'res_level_sort': 4}, '141776322849763954': {'res_id': '141776322849763954', 'res_clname': '主题报表', 'res_flname': 'Themed Reports', 'res_parentid': '0', 'res_showtype': 'FOLDER', 'res_url': '/warehouse/#/reports', 'res_cuid': '', 'res_docid': '', 'res_level': 0, 'res_level_sort': 4}, '5650393726582736454945': {'res_id': '5650393726582736454945', 'res_clname': '帆软报表', 'res_flname': '', 'res_parentid': '141776322849763954', 'res_showtype': 'FOLDER', 'res_url': '', 'res_cuid': '', 'res_docid': '', 'res_level': 0, 'res_level_sort': 6}, '3291463735799898800035': {'res_id': '3291463735799898800035', 'res_clname': '西南大学', 'res_flname': '', 'res_parentid': '144525042344232951', 'res_showtype': 'BO', 'res_url': 'openreport.do', 'res_cuid': 'AUvF7rQNhNhLmcDssiYCY_4', 'res_docid': '', 'res_level': 1, 'res_level_sort': 3}, '3197558082232718779666': {'res_id': '3197558082232718779666', 'res_clname': '回款分析', 'res_flname': '', 'res_parentid': '144525042344232951', 'res_showtype': 'fine', 'res_url': 'openreport.do', 'res_cuid': 'demo/Phone/analytics/financial/回款分析-phone.frm', 'res_docid': '', 'res_level': 1, 'res_level_sort': 2}, '3031318042343524329829': {'res_id': '3031318042343524329829', 'res_clname': '帆软bi', 'res_flname': '', 'res_parentid': '141776322849763954', 'res_showtype': 'FOLDER', 'res_url': '', 'res_cuid': '', 'res_docid': '', 'res_level': 1, 'res_level_sort': 0}, '2135714994606307001323': {'res_id': '2135714994606307001323', 'res_clname': '经营看板', 'res_flname': '', 'res_parentid': '138640964642435793617', 'res_showtype': 'FOLDER', 'res_url': 'kanban', 'res_cuid': '', 'res_docid': '', 'res_level': 1, 'res_level_sort': 3}, '3196356701662114230270': {'res_id': '3196356701662114230270', 'res_clname': '工厂生产日报', 'res_flname': '', 'res_parentid': '144525042344232951', 'res_showtype': 'fine', 'res_url': 'openreport.do', 'res_cuid': 'demo/Phone/industry/工厂生产日报-phone.frm', 'res_docid': '', 'res_level': 1, 'res_level_sort': 0}, '144525042344232951': {'res_id': '144525042344232951', 'res_clname': '领导视窗', 'res_flname': 'Executive Overview', 'res_parentid': '0', 'res_showtype': 'FOLDER', 'res_url': '/warehouse/#/leadership', 'res_cuid': '', 'res_docid': '', 'res_level': 0, 'res_level_sort': 3}, '3197599884977942421222': {'res_id': '3197599884977942421222', 'res_clname': '周期报送', 'res_flname': '', 'res_parentid': '141776322849763954', 'res_showtype': 'CI', 'res_url': 'openreport.do', 'res_cuid': '153944077', 'res_docid': '', 'res_level': 1, 'res_level_sort': 2}, '3197633770963924742253': {'res_id': '3197633770963924742253', 'res_clname': '按组织架构', 'res_flname': '', 'res_parentid': '141776322849763954', 'res_showtype': 'TABLEAU', 'res_url': 'openreport.do', 'res_cuid': 'Demo/sheet1', 'res_docid': '', 'res_level': 1, 'res_level_sort': 3}, '5693509050454463893691': {'res_id': '5693509050454463893691', 'res_clname': '行动方案', 'res_flname': 'PDCA Action Plan', 'res_parentid': '0', 'res_showtype': 'SEMFAPP', 'res_url': '/task/#/task', 'res_cuid': '', 'res_docid': '', 'res_level': 0, 'res_level_sort': 6}, '3197589145764380219447': {'res_id': '3197589145764380219447', 'res_clname': 'BO', 'res_flname': '', 'res_parentid': '141776322849763954', 'res_showtype': 'FOLDER', 'res_url': '', 'res_cuid': '', 'res_docid': '', 'res_level': 1, 'res_level_sort': 1}, '2135712031205141292314': {'res_id': '2135712031205141292314', 'res_clname': '沙盘推演', 'res_flname': 'sandtable', 'res_parentid': '138640964642435793617', 'res_showtype': 'FOLDER', 'res_url': 'sandtable', 'res_cuid': '', 'res_docid': '', 'res_level': 1, 'res_level_sort': 2}}, 'language': 'zh', 'refreshSetting': True, 'fis_domain': 'none', 'logoUrl': '', 'personalSetting': True, 'userPrimaryId': {'create_time': '2023-06-29 15:29:09', 'create_user': '10000000', 'd_res_flname': '', 'description': '123', 'dimension_val': 'user_org', 'is_boeuser': 'Y', 'is_group': '', 'islicenflag': 'A', 'lastmodifytime_pwd': '', 'login_name': 'hlx', 'login_type': 'all', 'mobile': '15845456525', 'status': 'T', 'sys_type': 'APP_SYS', 'update_time': '2024-04-18 16:14:59', 'update_user': '10000000', 'user_clname': '郝良喜', 'user_email': 'liangxi.hao@datacvg.com', 'user_i18nlang': '', 'user_id': 'hlx', 'user_new_password': '', 'user_org_name': '数聚股份', 'user_orgid': '5616829609559095645095', 'user_password': '5864D4ECC0D657D7', 'user_pkid': '3162594727557226953807'}, 'homeTitle': 'DIMP 主页', 'systemAccount': True, 'showThemeSetting': True, 'setLanguage': True}, 'message': '成功', 'status': 2000, 'success': True}
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.8' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test08_info</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.8')" >
+        通过</a>
+
+    <div id='div_pt1.8' class="popup_window">
+        <pre>pt1.8: {'data': {'login_name': 'hlx', 'mobile': '15845456525', 'user_clname': '郝良喜', 'user_email': 'liangxi.hao@datacvg.com', 'user_id': 'hlx', 'user_org_name': '数聚股份', 'user_orgid': '5616829609559095645095', 'user_pkid': '3162594727557226953807'}, 'message': '成功', 'status': 2000, 'success': True}
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='ft1.9' class='none'>
+    <td class='failCase'><div class='testcase'>test09_find_personalsetting</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_ft1.9')" >
+        失败</a>
+
+    <div id='div_ft1.9' class="popup_window">
+        <pre>ft1.9: {'data': {'144525042344232951': {'res_leftId': '144525042344232951', 'res_showSort': 3, 'isChecked': False}, '141776322849763954': {'res_leftId': '141776322849763954', 'res_showSort': 4, 'isChecked': False}, '138640964642435793617': {'res_leftId': '138640964642435793617', 'res_showSort': 5, 'isChecked': False}, '144609445799282765': {'res_leftId': '144609445799282765', 'res_showSort': 46, 'isChecked': False}, '144609084658973273': {'res_leftId': '144609084658973273', 'res_showSort': 45, 'isChecked': False}, '144609080392343909': {'res_leftId': '144609080392343909', 'res_showSort': 2, 'isChecked': False}, '5693509050454463893691': {'res_leftId': '5693509050454463893691', 'res_showSort': 6, 'isChecked': False}}, 'message': '成功', 'status': 2000, 'success': True}
+Traceback (most recent call last):
+  File "C:\Users\Administrator\Desktop\DIMP\testcases\test_pad.py", line 82, in test09_find_personalsetting
+    self.assertEqual("141776322849763954", res.json().get("data").get("144525042344232951").get("res_leftId"))
+AssertionError: '141776322849763954' != '144525042344232951'
+- 141776322849763954
++ 144525042344232951
+
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.10' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test10_kpi_permission</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.10')" >
+        通过</a>
+
+    <div id='div_pt1.10' class="popup_window">
+        <pre>pt1.10: {'data': {'kpiPermission': {'result': 'Y-B', 'sandTablePermission': True, 'thresholdName': {'challenge': '挑战', 'minimum': '保底', 'target': '目标'}}}, 'message': '成功', 'status': 2000, 'success': True}
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.11' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_dimension</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.11')" >
+        通过</a>
+
+    <div id='div_pt1.11' class="popup_window">
+        <pre>pt1.11: {'data': {'indexPadDimension': [{'id': '5617211325608066732621', 'd_res_pkid': '5617211325608741286062', 'd_res_id': '5617211325608066732621', 'd_res_name': '渠道', 'd_res_parentid': '0', 'd_res_rootid': '5617211325608066732621', 'pid': '0', 'd_res_value': '[ALL]', 'defaultkey': 'one_mdm_channel_code', 'd_res_stime': '20240408', 'd_res_etime': '20991231', 'res_level': '0', 'res_level_sort': 5, 'd_res_root_pkid': '5617211325608741286062', 'orgFlag': '', 'nodes': [{'id': '5617226756392217865843', 'd_res_pkid': '5617226756391509247202', 'd_res_id': '5617226756392217865843', 'd_res_name': 'C00139连锁事业部', 'd_res_parentid': '5617211325608066732621', 'd_res_rootid': '5617211325608066732621', 'pid': '5617211325608066732621', 'd_res_value': 'C00139', 'defaultkey': 'one_mdm_channel_code', 'd_res_stime': '20240408', 'd_res_etime': '20991231', 'res_level': '1', 'res_level_sort': 0, 'd_res_root_pkid': '5617211325608741286062', 'orgFlag': '', 'nodes': [{'id': '5623151962336534394681', 'd_res_pkid': '5623151962335785567797', 'd_res_id': '5623151962336534394681', 'd_res_name': 'C00001门店-直营', 'd_res_parentid': '5617226756392217865843', 'd_res_rootid': '5617211325608066732621', 'pid': '5617226756392217865843', 'd_res_value': 'C00001', 'defaultkey': 'two_mdm_channel_code', 'd_res_stime': '20240409', 'd_res_etime': '20991231', 'res_level': '2', 'res_level_sort': 0, 'd_res_root_pkid': '5617211325608741286062', 'orgFlag': '', 'nodes': [{'id': '5623177531645312953513', 'd_res_pkid': '5623177531644682254606', 'd_res_id': '5623177531645312953513', 'd_res_name': 'C00018自然到店-直营', 'd_res_parentid': '5623151962336534394681', 'd_res_rootid': '5617211325608066732621', 'pid': '5623151962336534394681', 'd_res_value': 'C00018', 'defaultkey': 'three_mdm_channel_code', 'd_res_stime': '20240409', 'd_res_etime': '20991231', 'res_level': '3', 'res_level_sort': 0, 'd_res_root_pkid': '5617211325608741286062', 'orgFlag': ''}]}, {'id': '5623161506841039012241', 'd_res_pkid': '5623161506840189511593', 'd_res_id': '5623161506841039012241', 'd_res_name': 'C00002门店加盟（销售）', 'd_res_parentid': '5617226756392217865843', 'd_res_rootid': '5617211325608066732621', 'pid': '5617226756392217865843', 'd_res_value': 'C00002', 'defaultkey': 'two_mdm_channel_code', 'd_res_stime': '20240409', 'd_res_etime': '20991231', 'res_level': '2', 'res_level_sort': 1, 'd_res_root_pkid': '5617211325608741286062', 'orgFlag': ''}]}, {'id': '5623109729995630335976', 'd_res_pkid': '5623109729994395982198', 'd_res_id': '5623109729995630335976', 'd_res_name': 'C00003电商事业部', 'd_res_parentid': '5617211325608066732621', 'd_res_rootid': '5617211325608066732621', 'pid': '5617211325608066732621', 'd_res_value': 'C00003', 'defaultkey': 'one_mdm_channel_code', 'd_res_stime': '20240409', 'd_res_etime': '20991231', 'res_level': '1', 'res_level_sort': 1, 'd_res_root_pkid': '5617211325608741286062', 'orgFlag': ''}]}]}, 'message': '成功', 'status': 2000, 'success': True}
+{'data': {'indexPadDimension': [{'id': '5623203502806547100685', 'd_res_pkid': '5623203502807625289517', 'd_res_id': '5623203502806547100685', 'd_res_name': '地理', 'd_res_parentid': '0', 'd_res_rootid': '5623203502806547100685', 'pid': '0', 'd_res_value': '[ALL]', 'defaultkey': 'province_code', 'd_res_stime': '20240409', 'd_res_etime': '20991231', 'res_level': '0', 'res_level_sort': 6, 'd_res_root_pkid': '5623203502807625289517', 'orgFlag': '', 'nodes': [{'id': '5623220945602484906492', 'd_res_pkid': '5623220945599559129777', 'd_res_id': '5623220945602484906492', 'd_res_name': '310000 上海', 'd_res_parentid': '5623203502806547100685', 'd_res_rootid': '5623203502806547100685', 'pid': '5623203502806547100685', 'd_res_value': '310000', 'defaultkey': 'province_code', 'd_res_stime': '20240409', 'd_res_etime': '20991231', 'res_level': '1', 'res_level_sort': 0, 'd_res_root_pkid': '5623203502807625289517', 'orgFlag': '', 'nodes': [{'id': '5623233617310038374740', 'd_res_pkid': '5623233617309215000483', 'd_res_id': '5623233617310038374740', 'd_res_name': '310100 上海市', 'd_res_parentid': '5623220945602484906492', 'd_res_rootid': '5623203502806547100685', 'pid': '5623220945602484906492', 'd_res_value': '310100', 'defaultkey': 'city_code', 'd_res_stime': '20240409', 'd_res_etime': '20991231', 'res_level': '2', 'res_level_sort': 0, 'd_res_root_pkid': '5623203502807625289517', 'orgFlag': '', 'nodes': [{'id': '5623238873586868694783', 'd_res_pkid': '5623238873585553660526', 'd_res_id': '5623238873586868694783', 'd_res_name': '310101 黄浦区', 'd_res_parentid': '5623233617310038374740', 'd_res_rootid': '5623203502806547100685', 'pid': '5623233617310038374740', 'd_res_value': '310101', 'defaultkey': 'area_code', 'd_res_stime': '20240409', 'd_res_etime': '20991231', 'res_level': '3', 'res_level_sort': 0, 'd_res_root_pkid': '5623203502807625289517', 'orgFlag': ''}, {'id': '5623244059675286179505', 'd_res_pkid': '5623244059674337552773', 'd_res_id': '5623244059675286179505', 'd_res_name': '310104 徐汇区', 'd_res_parentid': '5623233617310038374740', 'd_res_rootid': '5623203502806547100685', 'pid': '5623233617310038374740', 'd_res_value': '310104', 'defaultkey': 'area_code', 'd_res_stime': '20240409', 'd_res_etime': '20991231', 'res_level': '3', 'res_level_sort': 1, 'd_res_root_pkid': '5623203502807625289517', 'orgFlag': ''}]}]}, {'id': '5623228562345129821624', 'd_res_pkid': '5623228562344212032684', 'd_res_id': '5623228562345129821624', 'd_res_name': '110000 北京', 'd_res_parentid': '5623203502806547100685', 'd_res_rootid': '5623203502806547100685', 'pid': '5623203502806547100685', 'd_res_value': '110000', 'defaultkey': 'province_code', 'd_res_stime': '20240409', 'd_res_etime': '20991231', 'res_level': '1', 'res_level_sort': 1, 'd_res_root_pkid': '5623203502807625289517', 'orgFlag': ''}]}]}, 'message': '成功', 'status': 2000, 'success': True}
+{'data': {'indexPadDimension': [{'id': '5625522488848108682413', 'd_res_pkid': '5625522488849250981142', 'd_res_id': '5625522488848108682413', 'd_res_name': '赛道', 'd_res_parentid': '0', 'd_res_rootid': '5625522488848108682413', 'pid': '0', 'd_res_value': '[ALL]', 'defaultkey': 'track_key', 'd_res_stime': '20240409', 'd_res_etime': '20991231', 'res_level': '0', 'res_level_sort': 8, 'd_res_root_pkid': '5625522488849250981142', 'orgFlag': ''}]}, 'message': '成功', 'status': 2000, 'success': True}
+{'data': {'indexPadDimension': [{'id': '5625549007923802329761', 'd_res_pkid': '5625549007925082786401', 'd_res_id': '5625549007923802329761', 'd_res_name': '门店', 'd_res_parentid': '0', 'd_res_rootid': '5625549007923802329761', 'pid': '0', 'd_res_value': '[ALL]', 'defaultkey': 'store_key', 'd_res_stime': '20240409', 'd_res_etime': '20991231', 'res_level': '0', 'res_level_sort': 9, 'd_res_root_pkid': '5625549007925082786401', 'orgFlag': ''}]}, 'message': '成功', 'status': 2000, 'success': True}
+{'data': {'indexPadDimension': [{'id': '5625559767435887964046', 'd_res_pkid': '5625559767437285259152', 'd_res_id': '5625559767435887964046', 'd_res_name': '市场', 'd_res_parentid': '0', 'd_res_rootid': '5625559767435887964046', 'pid': '0', 'd_res_value': '[ALL]', 'defaultkey': 'market_code_lv1', 'd_res_stime': '20240409', 'd_res_etime': '20991231', 'res_level': '0', 'res_level_sort': 10, 'd_res_root_pkid': '5625559767437285259152', 'orgFlag': '', 'nodes': [{'id': '5625572258181048880047', 'd_res_pkid': '5625572258180234746495', 'd_res_id': '5625572258181048880047', 'd_res_name': '10000270地区市场', 'd_res_parentid': '5625559767435887964046', 'd_res_rootid': '5625559767435887964046', 'pid': '5625559767435887964046', 'd_res_value': '10000270', 'defaultkey': 'market_code_lv1', 'd_res_stime': '20240409', 'd_res_etime': '20991231', 'res_level': '1', 'res_level_sort': 0, 'd_res_root_pkid': '5625559767437285259152', 'orgFlag': '', 'nodes': [{'id': '5625583667717818317532', 'd_res_pkid': '5625583667717125855137', 'd_res_id': '5625583667717818317532', 'd_res_name': '10000320上海子公司2', 'd_res_parentid': '5625572258181048880047', 'd_res_rootid': '5625559767435887964046', 'pid': '5625572258181048880047', 'd_res_value': '10000320', 'defaultkey': 'market_code_lv2', 'd_res_stime': '20240409', 'd_res_etime': '20991231', 'res_level': '2', 'res_level_sort': 0, 'd_res_root_pkid': '5625559767437285259152', 'orgFlag': ''}]}]}]}, 'message': '成功', 'status': 2000, 'success': True}
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.12' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_page</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.12')" >
+        通过</a>
+
+    <div id='div_pt1.12' class="popup_window">
+        <pre>pt1.12: {'data': {'positionPage': [{'classification_pkid': '', 'classification_name': '', 'create_time': '2024-04-09', 'create_user': '郝良喜', 'dimensions': '["5617211325608741286062","5623203502807625289517","5625522488849250981142","5625549007925082786401","5625559767437285259152"]', 'is_first': 'F', 'is_other_share': 0, 'is_theme': 'F', 'pad_name': '测试', 'pad_pkid': '5624628525685427814480', 'page_res': '1', 'page': '1', 'remark': '', 'res_pkid': '5624628527258055934466', 'source_user_pkid': '', 'time_type': 'month', 'sort_index': '1', 'update_time': '2024-04-09', 'user_pkid': '3162594727557226953807', 'default_time_value_type': 'day', 'su_name': '', 'cu_name': '郝良喜', 'is_mobile': 1}, {'classification_pkid': '', 'classification_name': '', 'create_time': '2024-04-15', 'create_user': '郝良喜', 'dimensions': '["5617211325608741286062","5623203502807625289517","5625522488849250981142","5625549007925082786401","5625559767437285259152"]', 'is_first': 'F', 'is_other_share': 0, 'is_theme': 'F', 'pad_name': '销售看板', 'pad_pkid': '5675148816911298889237', 'page_res': '2', 'page': '2', 'remark': '', 'res_pkid': '5675148818380150921480', 'source_user_pkid': '', 'time_type': 'month', 'sort_index': '2', 'update_time': '2024-04-15', 'user_pkid': '3162594727557226953807', 'default_time_value_type': 'month', 'su_name': '', 'cu_name': '郝良喜', 'is_mobile': 1}]}, 'message': '成功', 'status': 2000, 'success': True}
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.13' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_position</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.13')" >
+        通过</a>
+
+    <div id='div_pt1.13' class="popup_window">
+        <pre>pt1.13: C:\Users\Administrator\Desktop\DIMP/data/position_data.json
+{'data': {'indexPosition': [{'index_id': 'LSWD_017', 'tree_index_pkid': '5624618741926059600537', 'positon_pkid': '5624628731824434322839', 'role_pkid': '', 'pos_x': 1, 'pos_y': 1, 'chart_wide': '2', 'chart_high': '2', 'update_time': '2024-04-18 15:23:22', 'update_user': '3162594727557226953807', 'chart_type': 'bar_chart', 'index_pkid': '5624618719009068508133', 'analysis_dimension': 'TIME', 'index_description': '这是销售额指标', 'size_x': 2, 'size_y': 2, 'page_chart_type': 'line_chart', 'page_analysis_dim': 'TIME', 'value_mnt': '', 'mnt_description': '', 'sort': '', 'chart_bottom_valtype': 'ddb4', 'chart_bottom_valtype_info': '', 'chart_default_valtype': 'ddb1', 'chart_valtype': 'ddb2,ddb3', 'progress_bar': 0, 'chart_end_time': '0', 'chart_range': '12', 'invalid': 1}, {'index_id': 'LSWD_007', 'tree_index_pkid': '5625452712981833548928', 'positon_pkid': '5625474674992548831371', 'role_pkid': '', 'pos_x': 1, 'pos_y': 3, 'chart_wide': '2', 'chart_high': '2', 'update_time': '2024-04-18 15:23:22', 'update_user': '3162594727557226953807', 'chart_type': 'pie_chart', 'index_pkid': '5625452701293487992179', 'analysis_dimension': 'TIME', 'index_description': '', 'size_x': 2, 'size_y': 2, 'page_chart_type': 'pie_chart', 'page_analysis_dim': 'TIME', 'value_mnt': '', 'mnt_description': '', 'sort': '', 'chart_bottom_valtype': '', 'chart_bottom_valtype_info': '', 'chart_default_valtype': 'ddb1', 'chart_valtype': '', 'progress_bar': 0, 'chart_end_time': '0', 'chart_range': '4', 'invalid': 1}, {'index_id': 'LSWD_015', 'tree_index_pkid': '5625232708825782984083', 'positon_pkid': '5625238309860182715119', 'role_pkid': '', 'pos_x': 3, 'pos_y': 1, 'chart_wide': '2', 'chart_high': '2', 'update_time': '2024-04-18 15:23:22', 'update_user': '3162594727557226953807', 'chart_type': 'bar_chart', 'index_pkid': '5625232677248877979518', 'analysis_dimension': 'TIME', 'index_description': '', 'size_x': 2, 'size_y': 2, 'page_chart_type': 'bar_chart', 'page_analysis_dim': 'TIME', 'value_mnt': '', 'mnt_description': '', 'sort': '', 'chart_bottom_valtype': '', 'chart_bottom_valtype_info': '', 'chart_default_valtype': 'ddb1', 'chart_valtype': '', 'progress_bar': 0, 'chart_end_time': '0', 'chart_range': '12', 'invalid': 1}, {'index_id': 'LSWD_014', 'tree_index_pkid': '5625470813886104078125', 'positon_pkid': '5625474674993523866046', 'role_pkid': '', 'pos_x': 3, 'pos_y': 3, 'chart_wide': '2', 'chart_high': '1', 'update_time': '2024-04-18 15:23:22', 'update_user': '3162594727557226953807', 'chart_type': 'long_text', 'index_pkid': '5625470802164201998219', 'analysis_dimension': 'TIME', 'index_description': '', 'size_x': 3, 'size_y': 2, 'page_chart_type': 'line_chart', 'page_analysis_dim': 'TIME', 'value_mnt': '', 'mnt_description': '', 'sort': '', 'chart_bottom_valtype': 'ddb3', 'chart_bottom_valtype_info': '', 'chart_default_valtype': 'ddb1', 'chart_valtype': 'ddb2,ddb3', 'progress_bar': 0, 'chart_end_time': '0', 'chart_range': '12', 'invalid': 1}, {'index_id': 'LSWD_022', 'tree_index_pkid': '5625425811909608939798', 'positon_pkid': '5625474674991540557373', 'role_pkid': '', 'pos_x': 5, 'pos_y': 1, 'chart_wide': '2', 'chart_high': '2', 'update_time': '2024-04-18 15:23:22', 'update_user': '3162594727557226953807', 'chart_type': 'line_chart', 'index_pkid': '5625425781961196847922', 'analysis_dimension': 'TIME', 'index_description': '', 'size_x': 2, 'size_y': 2, 'page_chart_type': 'line_chart', 'page_analysis_dim': 'TIME', 'value_mnt': '', 'mnt_description': '', 'sort': '', 'chart_bottom_valtype': '', 'chart_bottom_valtype_info': '', 'chart_default_valtype': 'ddb1', 'chart_valtype': '', 'progress_bar': 0, 'chart_end_time': '0', 'chart_range': '12', 'invalid': 1}, {'index_id': 'LSWD_023', 'tree_index_pkid': '5625464221818721449228', 'positon_pkid': '5625474674993056453281', 'role_pkid': '', 'pos_x': 6, 'pos_y': 3, 'chart_wide': '1', 'chart_high': '1', 'update_time': '2024-04-18 15:23:22', 'update_user': '3162594727557226953807', 'chart_type': 'text', 'index_pkid': '5625464200858649017924', 'analysis_dimension': 'TIME', 'index_description': '', 'size_x': 1, 'size_y': 1, 'page_chart_type': 'text', 'page_analysis_dim': 'TIME', 'value_mnt': '', 'mnt_description': '', 'sort': '', 'chart_bottom_valtype': '', 'chart_bottom_valtype_info': '', 'chart_default_valtype': 'ddb1', 'chart_valtype': 'ddb4,ddb3', 'progress_bar': 0, 'chart_end_time': '0', 'chart_range': '1', 'invalid': 1}]}, 'message': '成功', 'status': 2000, 'success': True}
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+<tr id='pt1.14' class='hiddenRow'>
+    <td class='none'><div class='testcase'>test_show</div></td>
+    <td colspan='5' align='center'>
+
+    <!--css div popup start-->
+    <a class="popup_link" onfocus='this.blur();' href="javascript:showTestDetail('div_pt1.14')" >
+        通过</a>
+
+    <div id='div_pt1.14' class="popup_window">
+        <pre>pt1.14: {'data': {'indexChart': [{'index_id': 'LSWD_017', 'index_pkid': '5624618719009068508133', 'name': '销售额', 'index_description': '这是销售额指标', 'index_default_color': '#50799D', 'chart_unit': '元', 'chart_type': 'line_chart', 'chart_top_title': '', 'chart_bottom_title': '环比', 'chart_wide': '2', 'chart_high': '2', 'chart_end_time': '0', 'chart_range': '12', 'chart_default_valtype': 'ddb1', 'chart_bottom_valtype': 'ddb4', 'chart_valtype': 'ddb2,ddb3', 'index_info_type': '1', 'progress_bar': '0', 'value_type_arr': 'ddb1,ddb2,ddb3,ddb4,ddb5,ddb6', 'value_type_status': '0,0,0,0,0,0', 'is_scoring': '', 'index_url': 'http://192.168.2.181:8880/datacvgbi/test_lyf/app/%E5%BA%94%E7%94%A8.app/API/test_zbmx.afl', 'index_threshold_type': '1', 'index_threshold_value': '', 'chart_bottom2_valtype': '', 'value_unit': '元', 'value_mnt': '10000000', 'value_fmt': '###,###.##', 'mnt_description': '千万', 'd_res_clname': '公司,市场,门店,赛道,地理,渠道,数聚股份', 'page_analysis_dim': 'TIME', 'page': '1', 'index_name': '销售额', 'times_type': 'DAY', 'timeval': '20240417', 'index_value_id': 'ddb1', 'bottom_value_color': '#c7e6e3', 'chart_default_valtype_name': '实际', 'chart_default_index_num': '10000000', 'chart_default_thresholdUnit': '元', 'thresholdUnit': '元', 'chart_default_value_unit': '元', 'index_num': '10000000', 'chart_bottom_valtype_name': '环比', 'valueType': {'ddb1': '0', 'ddb6': '0', 'ddb4': '0', 'ddb5': '0', 'ddb2': '0', 'ddb3': '0'}, 'dataMaps': [{'chart_valtype_value': 'ddb2', 'chart_valtype_unit': '元', 'chart_valtype_name': '同期'}, {'chart_valtype_value': 'ddb3', 'chart_valtype_unit': '元', 'chart_valtype_name': '目标'}], 'option': {'legend': {'data': ['实际', '环比']}, 'series': [{'data': ['15.84', '0.63', '', '', '', '', '', '', '', '', '', ''], 'name': '实际', 'type': 'line'}, {'data': ['3', '-96', '', '', '', '', '', '', '', '', '', ''], 'name': '环比', 'type': 'line', 'yAxisIndex': 1}], 'xAxis': [{'data': ['20240406', '20240407', '20240408', '20240409', '20240410', '20240411', '20240412', '20240413', '20240414', '20240415', '20240416', '20240417']}], 'yAxis': [{'axisLine': {'show': False}, 'name': '元', 'type': 'value'}, {'axisLine': {'show': False}, 'name': '%', 'type': 'value'}]}}]}, 'message': '成功', 'status': 2000, 'success': True}
+{'data': {'indexChart': [{'index_id': 'LSWD_007', 'index_pkid': '5625452701293487992179', 'name': '毛利额', 'index_description': '', 'index_default_color': '#50799D', 'chart_unit': '元', 'chart_type': 'pie_chart', 'chart_top_title': '', 'chart_wide': '2', 'chart_high': '2', 'chart_end_time': '0', 'chart_range': '4', 'chart_default_valtype': 'ddb1', 'chart_bottom_valtype': '', 'chart_valtype': '', 'index_info_type': '1', 'progress_bar': '', 'value_type_arr': 'ddb1,ddb2,ddb3,ddb4', 'value_type_status': '0,0,0,0', 'is_scoring': '', 'index_url': 'http://192.168.2.181:8880/datacvgbi/test_lyf/app/%E5%BA%94%E7%94%A8.app/API/test_zbmx.afl', 'index_threshold_type': '1', 'index_threshold_value': '', 'chart_bottom2_valtype': '', 'value_unit': '元', 'value_mnt': '10000000', 'value_fmt': '###,###.##', 'mnt_description': '千万', 'd_res_clname': '市场,门店,赛道,地理,渠道,数聚股份', 'page': '1', 'timeval': '20240417', 'page_analysis_dim': 'TIME', 'chart_default_valtype_name': '实际', 'chart_default_index_num': '10000000', 'chart_default_thresholdUnit': '元', 'thresholdUnit': '元', 'chart_default_value_unit': '元', 'index_num': '10000000', 'valueType': {'ddb1': '0', 'ddb4': '0', 'ddb2': '0', 'ddb3': '0'}, 'dataMaps': [], 'option': {'backgroundColor': '#50799D', 'series': [{'center': ['50%', '55%'], 'data': [{'name': '', 'value': ''}], 'radius': '60%', 'type': 'pie'}], 'title': {'text': '毛利额', 'textStyle': {'fontFamily': '微软雅黑, Arial, Verdana, sans-serif', 'fontSize': 22}}, 'tooltip': {'formatter': '{b} : {c} 元 ({d} %)', 'trigger': 'item'}}}]}, 'message': '成功', 'status': 2000, 'success': True}
+{'data': {'indexChart': [{'index_id': 'LSWD_015', 'index_pkid': '5625232677248877979518', 'name': '成本', 'index_description': '', 'index_default_color': '#50799D', 'chart_unit': '元', 'chart_type': 'bar_chart', 'chart_top_title': '', 'chart_wide': '2', 'chart_high': '2', 'chart_end_time': '0', 'chart_range': '12', 'chart_default_valtype': 'ddb1', 'chart_bottom_valtype': '', 'chart_valtype': '', 'index_info_type': '1', 'progress_bar': '', 'value_type_arr': 'ddb1,ddb2,ddb3,ddb4', 'value_type_status': '0,0,0,0', 'is_scoring': '', 'index_url': 'http://192.168.2.181:8880/datacvgbi/test_lyf/app/%E5%BA%94%E7%94%A8.app/API/test_zbmx.afl', 'index_threshold_type': '1', 'index_threshold_value': '', 'chart_bottom2_valtype': '', 'value_unit': '元', 'value_mnt': '10000000', 'value_fmt': '###,###.##', 'mnt_description': '千万', 'd_res_clname': '市场,门店,赛道,地理,渠道,数聚股份', 'page': '1', 'timeval': '20240417', 'page_analysis_dim': 'TIME', 'chart_default_valtype_name': '实际', 'chart_default_index_num': '10000000', 'chart_default_thresholdUnit': '元', 'thresholdUnit': '元', 'chart_default_value_unit': '元', 'index_num': '10000000', 'valueType': {'ddb1': '0', 'ddb4': '0', 'ddb2': '0', 'ddb3': '0'}, 'dataMaps': [], 'option': {'legend': {'data': ['实际']}, 'series': [{'data': ['88.8', '3.69', '', '', '', '', '', '', '', '', '', ''], 'name': '实际', 'type': 'bar'}], 'xAxis': [{'data': ['20240406', '20240407', '20240408', '20240409', '20240410', '20240411', '20240412', '20240413', '20240414', '20240415', '20240416', '20240417']}], 'yAxis': [{'axisLine': {'show': False}, 'name': '元', 'type': 'value'}]}}]}, 'message': '成功', 'status': 2000, 'success': True}
+{'data': {'indexChart': [{'index_id': 'LSWD_014', 'index_pkid': '5625470802164201998219', 'name': '闭店天数', 'index_description': '', 'index_default_color': '#50799D', 'chart_unit': '天', 'chart_type': 'line_chart', 'chart_top_title': '', 'chart_bottom_title': '目标', 'chart_wide': '2', 'chart_high': '1', 'chart_end_time': '0', 'chart_range': '12', 'chart_default_valtype': 'ddb1', 'chart_bottom_valtype': 'ddb3', 'chart_valtype': 'ddb2,ddb3', 'index_info_type': '1', 'progress_bar': '0', 'value_type_arr': 'ddb1,ddb2,ddb3,ddb4', 'value_type_status': '0,0,0,0', 'is_scoring': '', 'index_url': 'http://192.168.2.181:8880/datacvgbi/test_lyf/app/%E5%BA%94%E7%94%A8.app/API/test_zbmx.afl', 'index_threshold_type': '1', 'index_threshold_value': '', 'chart_bottom2_valtype': '', 'value_unit': '天', 'value_mnt': '10000000', 'value_fmt': '###,###', 'mnt_description': '千万', 'd_res_clname': '市场,门店,赛道,地理,渠道,数聚股份', 'page_analysis_dim': 'TIME', 'page': '1', 'index_name': '闭店天数', 'times_type': 'DAY', 'timeval': '20240417', 'index_value_id': 'ddb1', 'bottom_value_color': '#c7e6e3', 'chart_default_valtype_name': '实际', 'chart_default_index_num': '10000000', 'chart_default_thresholdUnit': '天', 'thresholdUnit': '天', 'chart_default_value_unit': '天', 'index_num': '10000000', 'chart_bottom_valtype_name': '目标', 'valueType': {'ddb1': '0', 'ddb4': '0', 'ddb2': '0', 'ddb3': '0'}, 'dataMaps': [{'chart_valtype_value': 'ddb2', 'chart_valtype_unit': '天', 'chart_valtype_name': '同期'}, {'chart_valtype_value': 'ddb3', 'chart_valtype_unit': '天', 'chart_valtype_name': '目标'}], 'option': {'legend': {'data': ['实际', '目标']}, 'series': [{'data': ['60', '0', '', '', '0', '0', '', '', '', '', '', ''], 'name': '实际', 'type': 'line'}, {'data': [], 'name': '目标', 'type': 'line'}], 'xAxis': [{'data': ['20240406', '20240407', '20240408', '20240409', '20240410', '20240411', '20240412', '20240413', '20240414', '20240415', '20240416', '20240417']}], 'yAxis': [{'axisLine': {'show': False}, 'name': '天', 'type': 'value'}, {'axisLine': {'show': False}, 'name': '', 'type': 'value'}]}}]}, 'message': '成功', 'status': 2000, 'success': True}
+{'data': {'indexChart': [{'index_id': 'LSWD_022', 'index_pkid': '5625425781961196847922', 'name': '毛利率', 'index_description': '', 'index_default_color': '#50799D', 'chart_unit': '%', 'chart_type': 'line_chart', 'chart_top_title': '', 'chart_wide': '2', 'chart_high': '2', 'chart_end_time': '0', 'chart_range': '12', 'chart_default_valtype': 'ddb1', 'chart_bottom_valtype': '', 'chart_valtype': '', 'index_info_type': '1', 'progress_bar': '', 'value_type_arr': 'ddb1,ddb2,ddb3,ddb4', 'value_type_status': '0,0,0,0', 'is_scoring': '', 'index_url': 'http://192.168.2.181:8880/datacvgbi/test_lyf/app/%E5%BA%94%E7%94%A8.app/API/test_zbmx.afl', 'index_threshold_type': '1', 'index_threshold_value': '', 'chart_bottom2_valtype': '', 'value_unit': '%', 'value_mnt': '10000000', 'value_fmt': '###,###.##', 'mnt_description': '千万', 'd_res_clname': '市场,门店,赛道,地理,渠道,数聚股份', 'page': '1', 'timeval': '20240417', 'page_analysis_dim': 'TIME', 'chart_default_valtype_name': '实际', 'chart_default_index_num': '10000000', 'chart_default_thresholdUnit': '%', 'thresholdUnit': '%', 'chart_default_value_unit': '%', 'index_num': '10000000', 'valueType': {'ddb1': '0', 'ddb4': '0', 'ddb2': '0', 'ddb3': '0'}, 'dataMaps': [], 'option': {'legend': {'data': ['实际']}, 'series': [{'data': ['5352.89', '', '', '', '', '', '', '', '', '', '', ''], 'name': '实际', 'type': 'line'}], 'xAxis': [{'data': ['20240406', '20240407', '20240408', '20240409', '20240410', '20240411', '20240412', '20240413', '20240414', '20240415', '20240416', '20240417']}], 'yAxis': [{'axisLine': {'show': False}, 'name': '%', 'type': 'value'}]}}]}, 'message': '成功', 'status': 2000, 'success': True}
+{'data': {'indexChart': [{'index_id': 'LSWD_023', 'index_pkid': '5625464200858649017924', 'name': '营业天数', 'index_description': '', 'index_default_color': '#50799D', 'chart_unit': '天', 'chart_type': 'text', 'chart_top_title': '', 'chart_wide': '1', 'chart_high': '1', 'chart_end_time': '0', 'chart_range': '1', 'chart_default_valtype': 'ddb1', 'chart_bottom_valtype': '', 'chart_valtype': 'ddb4,ddb3', 'index_info_type': '1', 'progress_bar': '0', 'value_type_arr': 'ddb1,ddb2,ddb3,ddb4', 'value_type_status': '0,0,0,0', 'is_scoring': '', 'index_url': 'http://192.168.2.181:8880/datacvgbi/test_lyf/app/%E5%BA%94%E7%94%A8.app/API/test_zbmx.afl', 'index_threshold_type': '1', 'index_threshold_value': '', 'chart_bottom2_valtype': '', 'value_unit': '天', 'value_mnt': '10000000', 'value_fmt': '###,###', 'mnt_description': '千万', 'd_res_clname': '市场,门店,赛道,地理,渠道,数聚股份', 'page_analysis_dim': 'TIME', 'page': '1', 'index_name': '营业天数', 'times_type': 'DAY', 'timeval': '20240417', 'index_value_id': 'ddb1', 'bottom_value_color': '#c7e6e3', 'chart_default_valtype_name': '实际', 'chart_default_index_num': '10000000', 'chart_default_thresholdUnit': '天', 'thresholdUnit': '天', 'chart_default_value_unit': '天', 'index_num': '10000000', 'valueType': {'ddb1': '0', 'ddb4': '0', 'ddb2': '0', 'ddb3': '0'}, 'dataMaps': [{'chart_valtype_value': 'ddb4', 'chart_valtype_unit': '%', 'chart_valtype_name': '环比'}, {'chart_valtype_value': 'ddb3', 'chart_valtype_unit': '天', 'chart_valtype_name': '目标'}]}]}, 'message': '成功', 'status': 2000, 'success': True}
+</pre>
+    </div>
+    <!--css div popup end-->
+
+    </td>
+</tr>
+
+        <tr id='total_row'>
+            <td>总计</td>
+            <td>14</td>
+            <td>12</td>
+            <td>2</td>
+            <td>0</td>
+            <td>&nbsp;</td>
+        </tr>
+    </table>
+
+        <div id='ending'>&nbsp;</div>
+        
+    <script type="text/javascript">
+        // 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('chart'));
+
+        // 指定图表的配置项和数据
+        var option = {
+            title : {
+                text: '测试执行情况',
+                x:'center'
+            },
+            tooltip : {
+                trigger: 'item',
+                formatter: "{a} <br/>{b} : {c} ({d}%)"
+            },
+            color: ['#95b75d', '#b64645', 'grey'],
+            legend: {
+                orient: 'vertical',
+                left: 'left',
+                data: ['通过','失败','错误']
+            },
+            series : [
+                {
+                    name: '测试执行情况',
+                    type: 'pie',
+                    radius : '60%',
+                    center: ['50%', '60%'],
+                    data:[
+                        {value:12, name:'通过'},
+                        {value:2, name:'失败'},
+                        {value:0, name:'错误'}
+                    ],
+                    itemStyle: {
+                        emphasis: {
+                            shadowBlur: 10,
+                            shadowOffsetX: 0,
+                            shadowColor: 'rgba(0, 0, 0, 0.5)'
+                        }
+                    }
+                }
+            ]
+        };
+
+        // 使用刚指定的配置项和数据显示图表。
+        myChart.setOption(option);
+    </script>
+    
+    </div>
+</body>
+</html>
